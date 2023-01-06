@@ -1,5 +1,5 @@
 name: fed-testpr-org
-#test
+#test pr
 # Required for OIDC
 permissions:
   id-token: write
