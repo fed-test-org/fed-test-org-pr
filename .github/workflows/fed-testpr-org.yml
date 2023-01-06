@@ -1,5 +1,5 @@
 name: fed-testpr-org
-#test pr test again
+#test pr test public added to org secrets
 # Required for OIDC
 permissions:
   id-token: write
