@@ -1,4 +1,4 @@
-name: fed-testpr
+name: fed-testpr-org
 
 # Required for OIDC
 permissions:

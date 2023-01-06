@@ -6,7 +6,7 @@ $tfbackend_sa_name        = 'tfstateemc'
 $tfbackend_container_name = 'tfstate'
 $tf_sp_name               = 'devprtest-org-tf-gh-sp'
 $ghUsername               = 'mcarter106'
-$ghPAT                    = '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'
+$ghPAT                    = ''
 $ghOrgName                = 'fed-test-org'
 $ghRepoName               = 'fed-test-org-pr'
 

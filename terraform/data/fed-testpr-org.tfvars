@@ -1,5 +1,5 @@
 resource_groups = {
-  "test-pr-oidc4-private" = {
+  "test-pr-oidc-org-private" = {
     location = "eastus2"
   }
 }
