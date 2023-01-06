@@ -1,0 +1,4 @@
+key                  = "fed-testpr.tfstate"
+resource_group_name  = "federatedtest"
+storage_account_name = "tfstateemc"
+container_name       = "tfstate"
