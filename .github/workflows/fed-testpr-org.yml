@@ -16,22 +16,37 @@ on:
   pull_request:
     branches: [ "michelle-test*" ]
 
-jobs:
-  terraform:
-    runs-on:     ubuntu-latest
+jobs: 
+  build-and-deploy:
+    runs-on: ubuntu-latest
     steps:
+    - name: 'Az CLI login'
+      uses: azure/login@v1
+      with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  
+    - name: 'Run Azure CLI commands'
+      run: |
+          az account show
+          az group list
+          pwd 
+  # terraform:
+  #   runs-on:     ubuntu-latest
+  #   steps:
 
-    - uses: actions/checkout@v2
-    - uses: hashicorp/setup-terraform@v2
+  #   - uses: actions/checkout@v2
+  #   - uses: hashicorp/setup-terraform@v2
 
-    - name:  Terraform Init
-      shell: pwsh
-      run:   terraform -chdir=terraform init -input=false -backend-config="${{ github.workspace }}/.tfbackend/${{ github.workflow }}"
+  #   - name:  Terraform Init
+  #     shell: pwsh
+  #     run:   terraform -chdir=terraform init -input=false -backend-config="${{ github.workspace }}/.tfbackend/${{ github.workflow }}"
 
-    - name:  Terraform Plan
-      shell: pwsh
-      run:   terraform -chdir=terraform plan -input=false -var-file="data/${{ github.workflow }}.tfvars" -out=tfplan
+  #   - name:  Terraform Plan
+  #     shell: pwsh
+  #     run:   terraform -chdir=terraform plan -input=false -var-file="data/${{ github.workflow }}.tfvars" -out=tfplan
 
-    - name:  Terraform Apply
-      shell: pwsh
-      run:   terraform -chdir=terraform apply -auto-approve tfplan
+  #   - name:  Terraform Apply
+  #     shell: pwsh
+  #     run:   terraform -chdir=terraform apply -auto-approve tfplan
