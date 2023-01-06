@@ -12,7 +12,7 @@ env:
   ARM_TENANT_ID:       ${{ secrets.AZURE_TENANT_ID }}
 
 on:
-  #workflow_dispatch:
+  workflow_dispatch:
   pull_request:
     branches: [ "michelle-test*" ]
 
