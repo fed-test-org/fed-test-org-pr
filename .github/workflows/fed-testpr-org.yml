@@ -1,5 +1,5 @@
 name: fed-testpr-org
-
+#test pr test public added to org secrets for realzie
 # Required for OIDC
 permissions:
   id-token: write
@@ -12,11 +12,13 @@ env:
   ARM_TENANT_ID:       ${{ secrets.AZURE_TENANT_ID }}
 
 on:
-  #workflow_dispatch:
+  workflow_dispatch:
   pull_request:
-    branches: [ "michelle-test*" ]
+    branches: 
+     - main
+     - michelle-test*
 
-jobs:
+jobs: 
   terraform:
     runs-on:     ubuntu-latest
     steps:

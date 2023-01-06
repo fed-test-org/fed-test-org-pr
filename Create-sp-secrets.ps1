@@ -28,7 +28,7 @@ if (-Not (Get-AzADAppFederatedCredential -ApplicationObjectId $app.Id))
         Audience            = 'api://AzureADTokenExchange'
         Issuer              = 'https://token.actions.githubusercontent.com'
         Name                = "$tf_sp_name"
-        Subject             = "repo:$ghOrgName/${ghRepoName}:branch"
+        Subject             = "repo:$ghOrgName/${ghRepoName}:pull_request"
     }
     $cred = New-AzADAppFederatedCredential @params
 }
@@ -63,6 +63,7 @@ if (-Not (Get-AzRoleAssignment -ServicePrincipalName $sp.AppId -Scope $sa.Id -Ro
 if (-Not [string]::IsNullOrEmpty($ghPAT))
 {
     $headers = @{"Authorization"="Basic $([System.Convert]::ToBase64String([System.Text.Encoding]::Ascii.GetBytes("${ghUsername}:$ghPAT")))"}
+    $repoId = (Invoke-WebRequest -Uri "https://api.github.com/repos/$ghOrgName/$ghRepoName" -Headers $headers | ConvertFrom-Json).Id
 
     $orgPublicKeyObj = Invoke-WebRequest -Uri "https://api.github.com/orgs/$ghOrgName/actions/secrets/public-key" -Headers $headers | ConvertFrom-Json
     $orgPublicKey = $orgPublicKeyObj.key
@@ -85,6 +86,7 @@ if (-Not [string]::IsNullOrEmpty($ghPAT))
         } | ConvertTo-Json
 
         $response += Invoke-WebRequest -Uri " https://api.github.com/orgs/$ghOrgName/actions/secrets/$($secret.Key)" -Method Put -Headers $headers -Body $clientIdBody
+        $response += Invoke-WebRequest -Uri "https://api.github.com/orgs/$ghOrgName/actions/secrets/$($secret.Key)/repositories/$repoId" -Method Put -Headers $headers
     }
 }
 else {

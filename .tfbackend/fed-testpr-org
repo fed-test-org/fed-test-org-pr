@@ -1,4 +1,4 @@
-key                  = "fed-testpr.tfstate"
+key                  = "fed-testpr-org.tfstate"
 resource_group_name  = "federatedtest"
 storage_account_name = "tfstateemc"
 container_name       = "tfstate"
